@@ -5,13 +5,15 @@ public class FundDTO {
     private String name;
     private String admin;
     private String symbol;
+    private String href;
 
     public FundDTO() {}
 
-    public FundDTO(String name, String admin, String symbol) {
+    public FundDTO(String name, String admin, String symbol, String href) {
         this.name = name;
         this.admin = admin;
         this.symbol = symbol;
+        this.href = href;
     }
 
     public String getName() {
@@ -36,5 +38,13 @@ public class FundDTO {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
     }
 }
