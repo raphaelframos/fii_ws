@@ -2,6 +2,8 @@ package me.raphaelframos.fii.utils;
 
 import org.jsoup.nodes.Element;
 
+import static me.raphaelframos.fii.utils.ConstantsUtils.NOT_FOUND_MESSAGE;
+
 public class SoupUtils {
 
     public static String text(Element element){
@@ -9,8 +11,12 @@ public class SoupUtils {
         try {
             result = element.text();
         }catch (Exception e){
-            result = "Não encontrado";
+            result = NOT_FOUND_MESSAGE;
         }
         return result;
+    }
+
+    public static boolean isValid(String value, String other) {
+        return !value.equals(NOT_FOUND_MESSAGE) || !other.equals(NOT_FOUND_MESSAGE);
     }
 }

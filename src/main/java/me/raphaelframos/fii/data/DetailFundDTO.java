@@ -4,22 +4,46 @@ import java.util.ArrayList;
 
 public class DetailFundDTO {
 
-    private IndicatorFundDTO indicator;
-    private ArrayList<StockFundDTO> stocks;
+    private ArrayList<IndicatorFundDTO> indicators;
+    private ArrayList<InfoFundDTO> informations;
+    private StockFundDTO stock;
 
-    public IndicatorFundDTO getIndicator() {
-        return indicator;
+
+    public StockFundDTO getStock() {
+        return stock;
     }
 
-    public void setIndicator(IndicatorFundDTO indicator) {
-        this.indicator = indicator;
+    public void setStock(StockFundDTO stock) {
+        this.stock = stock;
     }
 
-    public ArrayList<StockFundDTO> getStocks() {
-        return stocks;
+    public ArrayList<IndicatorFundDTO> getIndicators() {
+        return indicators;
     }
 
-    public void setStocks(ArrayList<StockFundDTO> stocks) {
-        this.stocks = stocks;
+    public void setIndicators(ArrayList<IndicatorFundDTO> indicators) {
+        this.indicators = indicators;
+    }
+
+    public ArrayList<InfoFundDTO> getInformations() {
+        return informations;
+    }
+
+    public void setInformations(ArrayList<InfoFundDTO> informations) {
+        this.informations = informations;
+    }
+
+    public void add(InfoFundDTO info) {
+        if(informations == null){
+            informations = new ArrayList<>();
+        }
+        informations.add(info);
+    }
+
+    public void add(IndicatorFundDTO indicatorFundDTO) {
+        if(indicators == null){
+            indicators = new ArrayList<>();
+        }
+        indicators.add(indicatorFundDTO);
     }
 }

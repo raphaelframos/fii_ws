@@ -7,7 +7,7 @@ public class StockFundDTO {
 
     public StockFundDTO(String price, String percent) {
         this.percent = percent;
-        this.price = price = price;
+        this.price = price;
     }
 
     public String getPrice() {

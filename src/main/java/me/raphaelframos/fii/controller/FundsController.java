@@ -1,6 +1,7 @@
 package me.raphaelframos.fii.controller;
 
 import me.raphaelframos.fii.data.*;
+import me.raphaelframos.fii.utils.LogUtils;
 import me.raphaelframos.fii.utils.SoupUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("funds")
@@ -56,26 +56,37 @@ public class FundsController {
             elements.forEach(e -> {
                 String title = SoupUtils.text(e.getElementsByClass("indicator-title").first());
                 String value = SoupUtils.text(e.getElementsByClass("indicator-value").first());
-                IndicatorFundDTO indicatorFundDTO = new IndicatorFundDTO(title, value);
-                detailFundDTO.setIndicator(indicatorFundDTO);
+                if(SoupUtils.isValid(title, value)){
+                    detailFundDTO.add(new IndicatorFundDTO(title, value));
+                }
             });
 
             Element element = document.getElementById("stock-price");
-            ArrayList<StockFundDTO> stockList = new ArrayList<>();
             if(element != null){
                 Element priceElement = element.getElementsByClass("price").first();
                 Element percentElement = element.getElementsByClass("percentage").first();
                 String price = SoupUtils.text(priceElement);
                 String percent = SoupUtils.text(percentElement);
-                StockFundDTO stockFundDTO = new StockFundDTO(price, percent);
-                stockList.add(stockFundDTO);
+                detailFundDTO.setStock(new StockFundDTO(price, percent));
             }
-            detailFundDTO.setStocks(stockList);
 
             Elements information = document.getElementsByClass("text-wrapper");
             information.forEach(info -> {
-                SoupUtils.text(info);
+                Element titleElement = info.getElementsByClass("title").first();
+                Element descriptionElement = info.getElementsByClass("description").first();
+                Element contentElement = info.getElementsByClass("content").first();
+
+                InfoFundDTO infoFundDTO = new InfoFundDTO(SoupUtils.text(titleElement), SoupUtils.text(descriptionElement), SoupUtils.text(contentElement));
+                detailFundDTO.add(infoFundDTO);
             });
+
+            Elements table = document.select("table"); //select the first table.
+            LogUtils.show("table", "Tamanho " + table.size());
+            table.forEach(t -> {
+                LogUtils.show("tables", SoupUtils.text(t));
+
+            });
+
 
 
         } catch (Exception e) {
