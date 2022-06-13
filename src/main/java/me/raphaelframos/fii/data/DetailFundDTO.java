@@ -7,6 +7,7 @@ public class DetailFundDTO {
     private ArrayList<IndicatorFundDTO> indicators;
     private ArrayList<InfoFundDTO> informations;
     private StockFundDTO stock;
+    private ArrayList<DividendFundDTO> dividends;
 
 
     public StockFundDTO getStock() {
@@ -45,5 +46,13 @@ public class DetailFundDTO {
             indicators = new ArrayList<>();
         }
         indicators.add(indicatorFundDTO);
+    }
+
+    public ArrayList<DividendFundDTO> getDividends() {
+        return dividends;
+    }
+
+    public void setDividends(ArrayList<DividendFundDTO> dividends) {
+        this.dividends = dividends;
     }
 }
