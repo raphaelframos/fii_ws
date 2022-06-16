@@ -1,15 +1,12 @@
 package me.raphaelframos.fii.service;
 
 import me.raphaelframos.fii.data.*;
-import me.raphaelframos.fii.utils.LogUtils;
 import me.raphaelframos.fii.utils.SoupUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-
-import javax.print.Doc;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -127,8 +124,12 @@ public class FundsExplorerServiceImpl implements FundsExplorerService {
 
     @Override
     public ArrayList<FundRankingDTO> ranking() {
-        ArrayList<FundRankingDTO> funds = convertValuesInFund(valuesRanking());
-        return funds;
+        return convertValuesInFund(valuesRanking());
+    }
+
+    @Override
+    public ArrayList<FundRankingDTO> ranking(String type, String category) {
+        return null;
     }
 
     private ArrayList<FundRankingDTO> convertValuesInFund(ArrayList<ArrayList<String>> values) {
@@ -176,12 +177,7 @@ public class FundsExplorerServiceImpl implements FundsExplorerService {
         try {
             Elements table = document(URL + "/ranking").getElementsByClass("table");
             Elements rows = table.select("tr");
-            Element header = rows.get(0);
-            Elements headers = header.getElementsByTag("th");
             ArrayList<String> rowList;
-            ArrayList<String> headerList = new ArrayList<>();
-            headers.forEach(h -> headerList.add(SoupUtils.text(h)));
-            result.add(headerList);
             for (int i = 1; i < rows.size(); i++) {
                 rowList = new ArrayList<>();
                 Element row = rows.get(i);

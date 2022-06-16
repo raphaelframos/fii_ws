@@ -1,16 +1,13 @@
 package me.raphaelframos.fii.controller;
 
-import me.raphaelframos.fii.data.*;
+import me.raphaelframos.fii.data.DetailFundDTO;
+import me.raphaelframos.fii.data.FundRankingDTO;
+import me.raphaelframos.fii.data.FundsDTO;
 import me.raphaelframos.fii.service.FundsExplorerService;
-import me.raphaelframos.fii.utils.LogUtils;
-import me.raphaelframos.fii.utils.SoupUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.server.PathParam;
@@ -39,7 +36,12 @@ public class FundsController {
     }
 
     @RequestMapping("/ranking")
-    public ResponseEntity<ArrayList<FundRankingDTO>> details(){
+    public ResponseEntity<ArrayList<FundRankingDTO>> ranking(){
         return ResponseEntity.ok(fundsExplorerService.ranking());
+    }
+
+    @RequestMapping("/ranking")
+    public ResponseEntity<ArrayList<FundRankingDTO>> ranking(@RequestParam("type") String type, @RequestParam("category") String category){
+        return ResponseEntity.ok(fundsExplorerService.ranking(type, category));
     }
 }

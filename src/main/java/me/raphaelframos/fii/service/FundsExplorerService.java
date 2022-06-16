@@ -10,4 +10,5 @@ public interface FundsExplorerService {
     FundsDTO listFunds();
     DetailFundDTO details(String fund);
     ArrayList<FundRankingDTO> ranking();
+    ArrayList<FundRankingDTO> ranking(String type, String category);
 }
