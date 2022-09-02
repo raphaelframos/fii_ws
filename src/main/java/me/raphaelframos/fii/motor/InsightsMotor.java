@@ -1,9 +1,11 @@
 package me.raphaelframos.fii.motor;
 
 import me.raphaelframos.fii.data.ClassificationFundDTO;
+import me.raphaelframos.fii.insights.Insight;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -28,5 +30,11 @@ public class InsightsMotor {
         funds.add(new ClassificationFundDTO(9, "MXRF11", "1.1%"));
         funds.add(new ClassificationFundDTO(10, "MXRF11", "1.1%"));
         return funds.subList(0, size);
+    }
+
+    public String today() {
+        Insight insight = new Insight();
+        insight.setText("Você sabia que é importante diversificar?");
+        return insight.getText();
     }
 }

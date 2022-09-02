@@ -40,7 +40,7 @@ public class FundsController {
         return ResponseEntity.ok(fundsExplorerService.ranking());
     }
 
-    @RequestMapping("/ranking")
+    @RequestMapping("/ranking/")
     public ResponseEntity<ArrayList<FundRankingDTO>> ranking(@RequestParam("type") String type, @RequestParam("category") String category){
         return ResponseEntity.ok(fundsExplorerService.ranking(type, category));
     }

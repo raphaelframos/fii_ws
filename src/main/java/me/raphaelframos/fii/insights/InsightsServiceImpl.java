@@ -1,4 +1,4 @@
-package me.raphaelframos.fii.service;
+package me.raphaelframos.fii.insights;
 
 import me.raphaelframos.fii.data.InsightDTO;
 import me.raphaelframos.fii.data.TopFundDTO;
@@ -25,5 +25,10 @@ public class InsightsServiceImpl implements InsightsService{
         insightDTO.setTip("Olá Eduardo, vi que você possui 5 fundos em sua carteira, sabia que uma maior diversidade te protege de eventuais problemas? Um número entre 10 e 15 é uma boa solução!");
         insightDTO.setTopFund(topFundDTO);
         return insightDTO;
+    }
+
+    @Override
+    public String today() {
+        return insightsMotor.today();
     }
 }
