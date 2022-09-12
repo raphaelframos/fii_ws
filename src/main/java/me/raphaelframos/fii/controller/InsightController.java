@@ -17,7 +17,7 @@ public class InsightController {
 
     @RequestMapping("/today")
     public String today(@PathParam("id") Long id){
-        return service.today();
+        return service.today(id);
     }
 
     @RequestMapping("/")

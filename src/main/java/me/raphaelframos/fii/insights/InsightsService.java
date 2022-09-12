@@ -5,5 +5,5 @@ import me.raphaelframos.fii.data.InsightDTO;
 public interface InsightsService {
     InsightDTO makeBy(Long id);
 
-    String today();
+    String today(Long id);
 }

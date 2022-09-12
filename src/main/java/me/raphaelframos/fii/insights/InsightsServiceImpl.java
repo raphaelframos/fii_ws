@@ -28,7 +28,7 @@ public class InsightsServiceImpl implements InsightsService{
     }
 
     @Override
-    public String today() {
+    public String today(Long id) {
         return insightsMotor.today();
     }
 }
