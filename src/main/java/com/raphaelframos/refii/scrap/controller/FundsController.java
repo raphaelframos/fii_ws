@@ -1,8 +1,7 @@
-package me.raphaelframos.fii.controller;
+package com.raphaelframos.refii.scrap.controller;
 
-import me.raphaelframos.fii.data.FundDTO;
-import me.raphaelframos.fii.data.FundsDTO;
-import org.apache.commons.lang3.StringUtils;
+import com.raphaelframos.refii.scrap.data.FundDTO;
+import com.raphaelframos.refii.scrap.data.FundsDTO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;

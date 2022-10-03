@@ -1,4 +1,4 @@
-package me.raphaelframos.fii.data;
+package com.raphaelframos.refii.scrap.data;
 
 import java.util.ArrayList;
 
