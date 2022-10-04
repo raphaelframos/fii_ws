@@ -1,44 +1,47 @@
 package com.raphaelframos.refii.scrap.controller;
 
-import com.raphaelframos.refii.scrap.data.FundDTO;
+import com.raphaelframos.refii.scrap.data.DetailFundDTO;
+import com.raphaelframos.refii.scrap.data.FundRankingDTO;
 import com.raphaelframos.refii.scrap.data.FundsDTO;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import com.raphaelframos.refii.scrap.service.FundsExplorerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.util.Objects;
+import javax.websocket.server.PathParam;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("funds")
 public class FundsController {
 
+    @Autowired
+    private FundsExplorerService fundsExplorerService;
+
+    public FundsController(FundsExplorerService fundsExplorerService) {
+        this.fundsExplorerService = fundsExplorerService;
+    }
+
     @RequestMapping("/")
-    public void scrapping(){
-        try {
-            Document document = Jsoup.connect("https://www.fundsexplorer.com.br/funds").get();
-            Elements elements = document.getElementsByClass("item");
-            FundsDTO fundsDTO = new FundsDTO(elements.size());
-            for (Element ads: elements) {
-                try{
-                    Elements elementsSymbol = ads.getElementsByClass("symbol");
-                    String symbol = Objects.requireNonNull(elementsSymbol.first()).text();
-                    Elements elementsName = ads.getElementsByClass("name");
-                    String name = Objects.requireNonNull(elementsName.first()).text();
-                    Elements elementsAdmin = ads.getElementsByClass("admin");
-                    String admin = Objects.requireNonNull(elementsAdmin.first()).text();
-                    String href = ads.getElementsByTag("a").attr("href");
-                    FundDTO fundDTO = new FundDTO(name, admin, symbol);
-                    fundsDTO.add(fundDTO);
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+    public ResponseEntity<FundsDTO> funds(){
+        FundsDTO fundsDTO = fundsExplorerService.listFunds();
+        return ResponseEntity.ok(fundsDTO);
+    }
+
+    @RequestMapping("/details")
+    public ResponseEntity<DetailFundDTO> details(@PathParam("href") String href){
+        return ResponseEntity.ok(fundsExplorerService.details(href));
+    }
+
+    @RequestMapping("/ranking")
+    public ResponseEntity<ArrayList<FundRankingDTO>> ranking(){
+        return ResponseEntity.ok(fundsExplorerService.ranking());
+    }
+
+    @RequestMapping("/ranking/")
+    public ResponseEntity<ArrayList<FundRankingDTO>> ranking(@RequestParam("type") String type, @RequestParam("category") String category){
+        return ResponseEntity.ok(fundsExplorerService.ranking(type, category));
     }
 }
