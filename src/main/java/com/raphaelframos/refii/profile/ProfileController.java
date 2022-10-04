@@ -6,4 +6,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("refii/profiles")
 public class ProfileController {
+
+
+    @RequestMapping("/")
+    public void teste(){
+
+    }
 }

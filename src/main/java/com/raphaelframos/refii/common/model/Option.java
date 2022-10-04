@@ -10,6 +10,11 @@ public class Option implements Serializable {
     public Option() {
     }
 
+    public Option(String value, String description) {
+        this.value = value;
+        this.description = description;
+    }
+
     public String getValue() {
         return value;
     }
