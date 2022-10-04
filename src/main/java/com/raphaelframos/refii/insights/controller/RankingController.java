@@ -3,7 +3,6 @@ package com.raphaelframos.refii.insights.controller;
 import com.raphaelframos.refii.common.model.Option;
 import com.raphaelframos.refii.insights.model.Fii;
 import com.raphaelframos.refii.insights.model.Ranking;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

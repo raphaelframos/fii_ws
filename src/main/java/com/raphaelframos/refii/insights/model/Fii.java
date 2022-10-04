@@ -5,7 +5,7 @@ import com.raphaelframos.refii.common.model.Option;
 public class Fii {
 
     private Long id;
-    private String position;
+    private int position;
     private String name;
     private Option option;
 
@@ -36,11 +36,11 @@ public class Fii {
         this.option = option;
     }
 
-    public String getPosition() {
+    public int getPosition() {
         return position;
     }
 
     public void setPosition(int position) {
-        this.position = position + "º";
+        this.position = position;
     }
 }
