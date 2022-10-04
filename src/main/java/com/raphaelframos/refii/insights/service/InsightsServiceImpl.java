@@ -1,8 +1,8 @@
 package com.raphaelframos.refii.insights.service;
 
+import com.raphaelframos.refii.insights.motor.InsightsMotor;
 import com.raphaelframos.refii.scrap.data.InsightDTO;
 import com.raphaelframos.refii.scrap.data.TopFundDTO;
-import com.raphaelframos.refii.scrap.motor.InsightsMotor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

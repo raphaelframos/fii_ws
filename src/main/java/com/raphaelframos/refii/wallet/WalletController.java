@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.websocket.server.PathParam;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public class WalletController {
 
     @RequestMapping("/")
-    public ResponseEntity<List<FundResponse>> myFiis(@RequestParam("id") Long id){
+    public ResponseEntity<List<FundResponse>> myFiis(@PathParam("id") Long id){
         FundResponse fundResponse = new FundResponse();
         Option option = new Option();
         option.setValue("1000");
@@ -36,7 +37,7 @@ public class WalletController {
     }
 
     @RequestMapping("/balance/")
-    public ResponseEntity<BalanceResponse> balance(@RequestParam("id") Long id){
+    public ResponseEntity<BalanceResponse> balance(@PathParam("id") Long id){
         return ResponseEntity.ok(new BalanceResponse("Saldo", "R$ 10000,00"));
     }
 }
