@@ -14,13 +14,13 @@ import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("funds")
-public class FundsController {
+@RequestMapping("refii/scrap/funds")
+public class ScrapFundsController {
 
     @Autowired
     private FundsExplorerService fundsExplorerService;
 
-    public FundsController(FundsExplorerService fundsExplorerService) {
+    public ScrapFundsController(FundsExplorerService fundsExplorerService) {
         this.fundsExplorerService = fundsExplorerService;
     }
 
@@ -43,5 +43,11 @@ public class FundsController {
     @RequestMapping("/ranking/")
     public ResponseEntity<ArrayList<FundRankingDTO>> ranking(@RequestParam("type") String type, @RequestParam("category") String category){
         return ResponseEntity.ok(fundsExplorerService.ranking(type, category));
+    }
+
+    @RequestMapping("/create")
+    public void create(){
+        fundsExplorerService.create();
+
     }
 }
