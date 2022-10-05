@@ -1,13 +1,17 @@
 package com.raphaelframos.refii.common.service;
 
+import com.raphaelframos.refii.common.entity.NewFundEntity;
 import com.raphaelframos.refii.common.model.ChatResponse;
+import com.raphaelframos.refii.common.utils.MoneyUtils;
 import com.raphaelframos.refii.fund.repository.FundRepository;
 import com.raphaelframos.refii.scrap.data.FundDTO;
+import com.raphaelframos.refii.wallet.repository.NewFundRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -15,9 +19,12 @@ public class FundService {
 
     @Autowired
     private FundRepository repository;
+    @Autowired
+    private NewFundRepository newFundRepository;
 
-    public FundService(FundRepository repository) {
+    public FundService(FundRepository repository, NewFundRepository newFundRepository) {
         this.repository = repository;
+        this.newFundRepository = newFundRepository;
     }
 
     public void create(ArrayList<FundDTO> funds) {
@@ -39,7 +46,11 @@ public class FundService {
         return funds;
     }
 
-    public ChatResponse create(String value, int position) {
+    public ChatResponse create(Long id, String value, int position) {
+        Optional<NewFundEntity> newFundEntity = newFundRepository.findById(id);
+        NewFundEntity newFund;
+        newFund = newFundEntity.orElseGet(NewFundEntity::new);
+        newFund.setId(id);
         String text = "";
         if(position == 0){
             text = "Qual o nome do fii?";
@@ -48,6 +59,7 @@ public class FundService {
             if(isValidFii(value)){
                 ++position;
                 text = "Quantas cotas?";
+                newFund.setName(value);
             }else{
 
             }
@@ -55,11 +67,13 @@ public class FundService {
             if(isValidAmount(value)){
                 ++position;
                 text = "E o preço unitário de cada Fii?";
+                newFund.setAmount(MoneyUtils.stringToInt(value));
             }else{
 
             }
         }else if(position == 3){
             ++position;
+            newFund.setPrice(MoneyUtils.stringToBigDecimal(value));
             text = "Deseja cadastrar um novo Fii?";
         }else if(position == 4){
             position = 0;
@@ -70,6 +84,8 @@ public class FundService {
                 text = "";
             }
         }
+        newFundRepository.save(newFund);
+        
         return new ChatResponse(position, text);
     }
 

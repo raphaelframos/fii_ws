@@ -37,7 +37,7 @@ public class FundController {
     @RequestMapping("/create")
     public ResponseEntity<ChatResponse> create(@RequestParam("id") Long id,
                                                @RequestParam("message") String value, @RequestParam("position") int position) {
-        ChatResponse chatResponse = service.create(value, position);
+        ChatResponse chatResponse = service.create(id, value, position);
         return ResponseEntity.ok(chatResponse);
     }
 
