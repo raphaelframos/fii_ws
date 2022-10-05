@@ -1,7 +1,6 @@
-package com.raphaelframos.refii.fii;
+package com.raphaelframos.refii.fund;
 
 import com.raphaelframos.refii.common.model.Option;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

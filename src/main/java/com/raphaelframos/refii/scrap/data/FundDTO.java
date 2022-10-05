@@ -1,5 +1,7 @@
 package com.raphaelframos.refii.scrap.data;
 
+import com.raphaelframos.refii.common.entity.FundEntity;
+
 public class FundDTO {
 
     private String name;
@@ -46,5 +48,18 @@ public class FundDTO {
 
     public void setHref(String href) {
         this.href = href;
+    }
+
+    public boolean isValid() {
+        return !name.isEmpty() && !symbol.isEmpty() && !href.isEmpty();
+    }
+
+    public FundEntity toEntity() {
+        FundEntity fundEntity = new FundEntity();
+        fundEntity.setAdmin(getAdmin());
+        fundEntity.setHref(getHref());
+        fundEntity.setName(getName());
+        fundEntity.setSymbol(getSymbol());
+        return fundEntity;
     }
 }

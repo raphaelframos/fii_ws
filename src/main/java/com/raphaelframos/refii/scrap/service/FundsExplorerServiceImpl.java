@@ -1,11 +1,13 @@
 package com.raphaelframos.refii.scrap.service;
 
+import com.raphaelframos.refii.common.service.FundService;
 import com.raphaelframos.refii.scrap.data.*;
 import com.raphaelframos.refii.utils.SoupUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,6 +17,12 @@ import java.util.ArrayList;
 public class FundsExplorerServiceImpl implements FundsExplorerService {
 
     private static String URL = "https://www.fundsexplorer.com.br";
+    @Autowired
+    private FundService fundService;
+
+    public FundsExplorerServiceImpl(FundService fundService) {
+        this.fundService = fundService;
+    }
 
     private Document document(String url) throws IOException {
         return Jsoup.connect(url).get();
@@ -24,7 +32,10 @@ public class FundsExplorerServiceImpl implements FundsExplorerService {
     public FundsDTO listFunds() {
         FundsDTO fundsDTO = new FundsDTO();
         try {
-            Elements elements = document(URL + "/funds").getElementsByClass("item");
+            Element element = document(URL + "/funds")
+                    .getElementById("fiis-list-container");
+            assert element != null;
+            Elements elements = element.getElementsByClass("col-md-3");
             fundsDTO.setTotal(elements.size());
             for (Element ads: elements) {
                 saveFund(fundsDTO, ads);
@@ -133,6 +144,12 @@ public class FundsExplorerServiceImpl implements FundsExplorerService {
         return null;
     }
 
+    @Override
+    public void create() {
+        FundsDTO fundExplorer = listFunds();
+        fundService.create(fundExplorer.getFunds());
+    }
+
     private ArrayList<FundRankingDTO> convertValuesInFund(ArrayList<ArrayList<String>> values) {
         ArrayList<FundRankingDTO> result = new ArrayList<>();
         for(ArrayList<String> row : values){
@@ -193,6 +210,7 @@ public class FundsExplorerServiceImpl implements FundsExplorerService {
         }
         return result;
     }
+
 
 
 }

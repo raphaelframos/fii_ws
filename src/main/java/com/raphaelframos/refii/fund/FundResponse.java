@@ -1,4 +1,4 @@
-package com.raphaelframos.refii.fii;
+package com.raphaelframos.refii.fund;
 
 import com.raphaelframos.refii.common.model.Option;
 
