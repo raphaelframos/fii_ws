@@ -24,6 +24,7 @@ public class FundController {
     public List<FundResponse> fund(){
         return Collections.emptyList();
     }
+
     @RequestMapping("/all")
     public List<FundDTO> all(){
         return service.findAll();
