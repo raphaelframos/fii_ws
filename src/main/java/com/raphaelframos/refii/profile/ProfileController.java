@@ -21,19 +21,7 @@ public class ProfileController {
     @RequestMapping("/")
     public ResponseEntity<ChatResponse> create(@RequestParam("id") Long id,
             @RequestParam("value") String value, @RequestParam("position") int position){
-        ChatResponse chatResponse = new ChatResponse();
-        if(position == 0){
-            ++position;
-            chatResponse.setText("Olá, meu nome é Joe e vou ser seu assistente financeiro. Para comecar nossa história, qual é o seu nome?");
-        }else if(position == 1){
-            if(value.isEmpty()){
-                chatResponse.setText("Não me abandone! Qual seu nome?");
-            }else{
-                ++position;
-                chatResponse.setText("Tudo bem, " + value + "! Me diga qual é sua profissão?");
-            }
-        }
-        chatResponse.setPosition(position);
+        ChatResponse chatResponse = service.create(id, value, position);
         return ResponseEntity.ok(chatResponse);
     }
 }

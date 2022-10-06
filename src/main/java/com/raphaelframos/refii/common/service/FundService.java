@@ -95,12 +95,15 @@ public class FundService {
             }
         }
         newFundRepository.save(newFund);
-        createNewFund(id, newFund);
+        if(createNewFund(id, newFund)){
+            repository.deleteById(id);
+        }
 
         return new ChatResponse(position, text);
     }
 
-    private void createNewFund(Long id, NewFundEntity newFund) {
+    private boolean createNewFund(Long id, NewFundEntity newFund) {
+        boolean result = false;
         if(newFund.isCompleted()){
             Optional<ProfileEntity> profileEntity = profileRepository.findById(id);
             if(profileEntity.isPresent()){
@@ -113,8 +116,10 @@ public class FundService {
                 fundWalletEntity = fundWalletRepository.save(fundWalletEntity);
                 profile.add(fundWalletEntity);
                 profileRepository.save(profile);
+                result = true;
             }
         }
+        return result;
     }
 
     private boolean isValidAmount(String value) {

@@ -14,6 +14,7 @@ public class ProfileEntity {
     private Long id;
     private String name;
     private String phone;
+    private String occupation;
     @OneToMany
     private ArrayList<FundWalletEntity> funds;
 
@@ -54,5 +55,13 @@ public class ProfileEntity {
 
     public void setFunds(ArrayList<FundWalletEntity> funds) {
         this.funds = funds;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
     }
 }
