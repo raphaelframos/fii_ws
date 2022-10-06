@@ -1,10 +1,14 @@
 package com.raphaelframos.refii.common.service;
 
+import com.raphaelframos.refii.common.entity.FundWalletEntity;
 import com.raphaelframos.refii.common.entity.NewFundEntity;
 import com.raphaelframos.refii.common.model.ChatResponse;
 import com.raphaelframos.refii.common.utils.MoneyUtils;
 import com.raphaelframos.refii.fund.repository.FundRepository;
+import com.raphaelframos.refii.profile.ProfileEntity;
+import com.raphaelframos.refii.profile.repository.ProfileRepository;
 import com.raphaelframos.refii.scrap.data.FundDTO;
+import com.raphaelframos.refii.wallet.repository.FundWalletRepository;
 import com.raphaelframos.refii.wallet.repository.NewFundRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +25,16 @@ public class FundService {
     private FundRepository repository;
     @Autowired
     private NewFundRepository newFundRepository;
+    @Autowired
+    private FundWalletRepository fundWalletRepository;
+    @Autowired
+    private ProfileRepository profileRepository;
 
-    public FundService(FundRepository repository, NewFundRepository newFundRepository) {
+    public FundService(FundRepository repository, NewFundRepository newFundRepository, FundWalletRepository fundWalletRepository, ProfileRepository profileRepository) {
         this.repository = repository;
         this.newFundRepository = newFundRepository;
+        this.fundWalletRepository = fundWalletRepository;
+        this.profileRepository = profileRepository;
     }
 
     public void create(ArrayList<FundDTO> funds) {
@@ -85,8 +95,26 @@ public class FundService {
             }
         }
         newFundRepository.save(newFund);
-        
+        createNewFund(id, newFund);
+
         return new ChatResponse(position, text);
+    }
+
+    private void createNewFund(Long id, NewFundEntity newFund) {
+        if(newFund.isCompleted()){
+            Optional<ProfileEntity> profileEntity = profileRepository.findById(id);
+            if(profileEntity.isPresent()){
+                ProfileEntity profile = profileEntity.get();
+                FundWalletEntity fundWalletEntity = new FundWalletEntity();
+                fundWalletEntity.setAmount(newFund.getAmount());
+                fundWalletEntity.setName(newFund.getName());
+                fundWalletEntity.setPrice(newFund.getPrice());
+                fundWalletEntity.setProfile(profile);
+                fundWalletEntity = fundWalletRepository.save(fundWalletEntity);
+                profile.add(fundWalletEntity);
+                profileRepository.save(profile);
+            }
+        }
     }
 
     private boolean isValidAmount(String value) {
