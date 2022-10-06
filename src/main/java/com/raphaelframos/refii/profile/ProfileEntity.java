@@ -4,6 +4,7 @@ import com.raphaelframos.refii.common.entity.FundWalletEntity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "profile")
@@ -16,7 +17,7 @@ public class ProfileEntity {
     private String phone;
     private String occupation;
     @OneToMany
-    private ArrayList<FundWalletEntity> funds;
+    private List<FundWalletEntity> funds;
 
     public void add(FundWalletEntity fundWalletEntity) {
         if(funds == null){
@@ -49,11 +50,11 @@ public class ProfileEntity {
         this.phone = phone;
     }
 
-    public ArrayList<FundWalletEntity> getFunds() {
+    public List<FundWalletEntity> getFunds() {
         return funds;
     }
 
-    public void setFunds(ArrayList<FundWalletEntity> funds) {
+    public void setFunds(List<FundWalletEntity> funds) {
         this.funds = funds;
     }
 
