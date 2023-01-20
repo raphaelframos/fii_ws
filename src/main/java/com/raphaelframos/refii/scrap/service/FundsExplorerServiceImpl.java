@@ -55,7 +55,7 @@ public class FundsExplorerServiceImpl implements FundsExplorerService {
             Elements elementsAdmin = ads.getElementsByClass("admin");
             String admin = SoupUtils.text(elementsAdmin.first());
             String href = ads.getElementsByTag("a").attr("href");
-            FundDTO fundDTO = new FundDTO(name, admin, symbol, href);
+            FundDTO fundDTO = new FundDTO(name, admin, symbol, href, "");
             fundsDTO.add(fundDTO);
         }catch (Exception e){
             e.printStackTrace();

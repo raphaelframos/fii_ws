@@ -8,14 +8,16 @@ public class FundDTO {
     private String admin;
     private String symbol;
     private String href;
+    private String segment;
 
     public FundDTO() {}
 
-    public FundDTO(String name, String admin, String symbol, String href) {
+    public FundDTO(String name, String admin, String symbol, String href, String segment) {
         this.name = name;
         this.admin = admin;
         this.symbol = symbol;
         this.href = href;
+        this.segment = segment;
     }
 
     public String getName() {
@@ -50,7 +52,7 @@ public class FundDTO {
         this.href = href;
     }
 
-    public boolean isValid() {
+    public boolean verify() {
         return !name.isEmpty() && !symbol.isEmpty() && !href.isEmpty();
     }
 
@@ -60,6 +62,15 @@ public class FundDTO {
         fundEntity.setHref(getHref());
         fundEntity.setName(getName());
         fundEntity.setSymbol(getSymbol());
+        fundEntity.setSegment(getSegment());
         return fundEntity;
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+
+    public void setSegment(String segment) {
+        this.segment = segment;
     }
 }

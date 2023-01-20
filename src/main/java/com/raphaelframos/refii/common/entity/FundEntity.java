@@ -13,6 +13,7 @@ public class FundEntity {
     private String admin;
     private String symbol;
     private String href;
+    private String segment;
 
     public FundEntity() {
     }
@@ -55,5 +56,13 @@ public class FundEntity {
 
     public void setHref(String href) {
         this.href = href;
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+
+    public void setSegment(String segment) {
+        this.segment = segment;
     }
 }
