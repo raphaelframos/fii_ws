@@ -17,7 +17,7 @@ import java.util.List;
 public class FundController {
 
     @Autowired
-    private FundService service;
+    private final FundService service;
 
     public FundController(FundService service) {
         this.service = service;

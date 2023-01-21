@@ -1,8 +1,5 @@
 package com.raphaelframos.refii.common.entity;
 
-import com.raphaelframos.refii.profile.Profile;
-import com.raphaelframos.refii.profile.ProfileEntity;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 

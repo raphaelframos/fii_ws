@@ -10,9 +10,10 @@ public class ChatResponse {
     public ChatResponse() {
     }
 
-    public ChatResponse(int position, String text) {
+    public ChatResponse(int position, String text, int type) {
         this.position = position;
         this.text = text;
+        setType(type);
     }
 
     public int getPosition() {
