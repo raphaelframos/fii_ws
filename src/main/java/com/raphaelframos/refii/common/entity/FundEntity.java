@@ -3,7 +3,7 @@ package com.raphaelframos.refii.common.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "funds")
+@Table(name = "FUND_SCRAP")
 public class FundEntity {
 
     @Id

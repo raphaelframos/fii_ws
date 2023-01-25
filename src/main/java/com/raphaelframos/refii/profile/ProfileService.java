@@ -19,7 +19,7 @@ public class ProfileService {
     }
 
     public Optional<ProfileEntity> findBy(Long id) {
-        return Optional.of(new ProfileEntity());
+        return repository.findById(id);
     }
 
     public ChatResponse create(Long id, String value, int position) {

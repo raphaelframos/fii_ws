@@ -7,8 +7,7 @@ public class ChatResponse {
     private int type;
     private boolean isOwner = false;
 
-    public ChatResponse() {
-    }
+    public ChatResponse() {}
 
     public ChatResponse(int position, String text, int type) {
         this.position = position;

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "fund_wallet")
+@Table(name = "FUND_WALLET")
 public class FundWalletEntity {
 
     @Id
@@ -12,6 +12,7 @@ public class FundWalletEntity {
     private Long id;
     private String name;
     private int amount;
+    private int rating;
     private BigDecimal price;
     @ManyToOne
     private ProfileEntity profile;
@@ -56,5 +57,13 @@ public class FundWalletEntity {
 
     public void setProfile(ProfileEntity profile) {
         this.profile = profile;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }
