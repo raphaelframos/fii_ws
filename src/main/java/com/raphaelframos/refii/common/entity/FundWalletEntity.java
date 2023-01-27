@@ -10,7 +10,8 @@ public class FundWalletEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+    @ManyToOne
+    private FundEntity fund;
     private int amount;
     private int rating;
     private BigDecimal price;
@@ -25,14 +26,6 @@ public class FundWalletEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getAmount() {
@@ -65,5 +58,13 @@ public class FundWalletEntity {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public FundEntity getFund() {
+        return fund;
+    }
+
+    public void setFund(FundEntity fund) {
+        this.fund = fund;
     }
 }

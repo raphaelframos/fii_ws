@@ -33,13 +33,6 @@ public class FundController {
         return service.findAll();
     }
 
-    @RequestMapping("/create")
-    public ResponseEntity<ChatResponse> create(@RequestParam("id") Long id,
-                                               @RequestParam("message") String value, @RequestParam("position") int position) {
-        ChatResponse chatResponse = service.create(id, value, position);
-        return ResponseEntity.ok(chatResponse);
-    }
-
     @RequestMapping("/names")
     public List<String> names(){
         return service.names();

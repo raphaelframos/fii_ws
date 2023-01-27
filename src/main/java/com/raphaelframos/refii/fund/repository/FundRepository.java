@@ -4,7 +4,6 @@ import com.raphaelframos.refii.common.entity.FundEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
@@ -14,4 +13,6 @@ public interface FundRepository extends JpaRepository<FundEntity, Long> {
 
     @Query(value = "SELECT (symbol) FROM FUND_SCRAP", nativeQuery = true)
     List<String> findNames();
+
+    FundEntity findBySymbol(String value);
 }

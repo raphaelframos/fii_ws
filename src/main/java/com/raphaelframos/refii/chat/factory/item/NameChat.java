@@ -24,7 +24,7 @@ public class NameChat implements Chat {
 
     @Override
     public boolean isValid(String value) {
-        return !value.isEmpty();
+        return true;
     }
 
     @Override

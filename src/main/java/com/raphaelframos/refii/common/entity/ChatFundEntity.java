@@ -2,7 +2,7 @@ package com.raphaelframos.refii.common.entity;
 
 import javax.persistence.*;
 
-@Entity(name = "CHAT_FUND")
+@Entity(name = "FUND_CHAT")
 public class ChatFundEntity {
 
     @Id
@@ -11,13 +11,13 @@ public class ChatFundEntity {
     private int position;
     private String value;
     @ManyToOne
-    private ProfileEntity profileEntity;
+    private ProfileEntity profile;
 
     public ChatFundEntity() {}
 
-    public ChatFundEntity(ProfileEntity profileEntity, int position, String value) {
+    public ChatFundEntity(ProfileEntity profile, int position, String value) {
         setPosition(position);
-        setProfileEntity(profileEntity);
+        setProfile(profile);
         setValue(value);
     }
 
@@ -45,11 +45,11 @@ public class ChatFundEntity {
         this.value = value;
     }
 
-    public ProfileEntity getProfileEntity() {
-        return profileEntity;
+    public ProfileEntity getProfile() {
+        return profile;
     }
 
-    public void setProfileEntity(ProfileEntity profileEntity) {
-        this.profileEntity = profileEntity;
+    public void setProfile(ProfileEntity profile) {
+        this.profile = profile;
     }
 }

@@ -11,7 +11,7 @@ public class ChatFactory {
     public static final int RELOAD = 4;
     public static final int END = 5;
 
-    public static Chat get(String value, int position) {
+    public static Chat get(int position) {
         Chat chat;
         switch (position){
             case NAME:
