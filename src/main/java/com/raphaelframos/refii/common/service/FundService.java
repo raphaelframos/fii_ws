@@ -1,5 +1,8 @@
 package com.raphaelframos.refii.common.service;
 
+import com.raphaelframos.refii.common.entity.FundEntity;
+import com.raphaelframos.refii.common.entity.FundWalletEntity;
+import com.raphaelframos.refii.fund.model.FundDetail;
 import com.raphaelframos.refii.fund.repository.FundRepository;
 import com.raphaelframos.refii.profile.ProfileService;
 import com.raphaelframos.refii.profile.repository.ProfileRepository;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,7 +59,7 @@ public class FundService {
                 .collect(Collectors.toList());
         return funds;
     }
-    
+
     private boolean isValidAmount(String value) {
         try{
             return (Integer.parseInt(value) > 0);
@@ -71,5 +75,18 @@ public class FundService {
 
     public List<String> names() {
         return repository.findNames();
+    }
+
+    public FundDetail detail(Long fundId) {
+        Optional<FundEntity> fundEntity = repository.findById(fundId);
+        FundDetail fundDetail = new FundDetail();
+        if(fundEntity.isPresent()){
+            FundEntity fund = fundEntity.get();
+            fundDetail.setName(fund.getName());
+            fundDetail.setAdmin(fund.getAdmin());
+            fundDetail.setSymbol(fund.getSymbol());
+            fundDetail.setSegment(fund.getSegment());
+        }
+        return fundDetail;
     }
 }

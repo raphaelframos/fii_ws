@@ -27,7 +27,7 @@ public class WalletService {
             double totalPrice = repository.totalPrice(userId);
             funds.forEach( f -> {
                 FundFeed fundFeed = new FundFeed(f, totalPrice);
-                response.add(new FundResponse(fundFeed.getSymbol(), fundFeed.getSegment(), fundFeed));
+                response.add(new FundResponse(fundFeed));
             });
         }catch (Exception e){
             e.printStackTrace();
