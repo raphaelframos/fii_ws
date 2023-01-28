@@ -1,23 +1,27 @@
-package com.raphaelframos.refii.profile;
-
-import com.raphaelframos.refii.common.entity.FundWalletEntity;
+package com.raphaelframos.refii.common.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "profile")
+@Entity(name = "PROFILE")
 public class ProfileEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String email;
     private String phone;
     private String occupation;
     @OneToMany
     private List<FundWalletEntity> funds;
+
+    public ProfileEntity(){}
+
+    public ProfileEntity(String email) {
+        setEmail(email);
+    }
 
     public void add(FundWalletEntity fundWalletEntity) {
         if(funds == null){
@@ -64,5 +68,13 @@ public class ProfileEntity {
 
     public void setOccupation(String occupation) {
         this.occupation = occupation;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

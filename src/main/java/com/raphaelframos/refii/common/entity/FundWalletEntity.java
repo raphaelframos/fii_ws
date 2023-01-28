@@ -1,20 +1,19 @@
 package com.raphaelframos.refii.common.entity;
 
-import com.raphaelframos.refii.profile.Profile;
-import com.raphaelframos.refii.profile.ProfileEntity;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "fund_wallet")
+@Table(name = "FUND_WALLET")
 public class FundWalletEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String name;
+    @ManyToOne
+    private FundEntity fund;
     private int amount;
+    private int rating;
     private BigDecimal price;
     @ManyToOne
     private ProfileEntity profile;
@@ -27,14 +26,6 @@ public class FundWalletEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getAmount() {
@@ -59,5 +50,21 @@ public class FundWalletEntity {
 
     public void setProfile(ProfileEntity profile) {
         this.profile = profile;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public FundEntity getFund() {
+        return fund;
+    }
+
+    public void setFund(FundEntity fund) {
+        this.fund = fund;
     }
 }

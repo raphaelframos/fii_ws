@@ -12,13 +12,14 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @Service
 public class FundsExplorerServiceImpl implements FundsExplorerService {
 
-    private static String URL = "https://www.fundsexplorer.com.br";
+    private static final String URL = "https://www.fundsexplorer.com.br/";
     @Autowired
-    private FundService fundService;
+    private final FundService fundService;
 
     public FundsExplorerServiceImpl(FundService fundService) {
         this.fundService = fundService;
@@ -32,7 +33,7 @@ public class FundsExplorerServiceImpl implements FundsExplorerService {
     public FundsDTO listFunds() {
         FundsDTO fundsDTO = new FundsDTO();
         try {
-            Element element = document(URL + "/funds")
+            Element element = document(URL + "funds")
                     .getElementById("fiis-list-container");
             assert element != null;
             Elements elements = element.getElementsByClass("col-md-3");
@@ -147,7 +148,29 @@ public class FundsExplorerServiceImpl implements FundsExplorerService {
     @Override
     public void create() {
         FundsDTO fundExplorer = listFunds();
-        fundService.create(fundExplorer.getFunds());
+        HashMap<String, String> sectors = getSectors();
+        fundService.create(fundExplorer.getFunds(), sectors);
+    }
+
+    @Override
+    public void update() {
+        
+    }
+
+    private HashMap<String, String> getSectors() {
+        return convertValuesInSector(getSector());
+    }
+
+    private HashMap<String, String> convertValuesInSector(ArrayList<ArrayList<String>> values){
+        HashMap<String, String> result = new HashMap<>();
+        for(ArrayList<String> row : values) {
+            try {
+                result.put(row.get(0), row.get(1));
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
     private ArrayList<FundRankingDTO> convertValuesInFund(ArrayList<ArrayList<String>> values) {
@@ -189,11 +212,32 @@ public class FundsExplorerServiceImpl implements FundsExplorerService {
         return result;
     }
 
+    private ArrayList<ArrayList<String>> getSector(){
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        try {
+            Elements table = document(URL + "ranking").getElementsByClass("table");
+            Elements rows = table.select("tr");
+            ArrayList<String> rowList;
+            for (int i = 1; i < rows.size(); i++) {
+                rowList = new ArrayList<>();
+                Element row = rows.get(i);
+                Elements cols = row.select("td");
+                for (Element col : cols) {
+                    rowList.add(SoupUtils.text(col));
+                }
+                result.add(rowList);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     private ArrayList<ArrayList<String>> valuesRanking(){
         ArrayList<ArrayList<String>> result = new ArrayList<>();
 
         try {
-            Elements table = document(URL + "/ranking").getElementsByClass("table");
+            Elements table = document(URL + "ranking").getElementsByClass("table");
             Elements rows = table.select("tr");
             ArrayList<String> rowList;
             for (int i = 1; i < rows.size(); i++) {

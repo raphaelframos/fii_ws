@@ -1,13 +1,25 @@
 package com.raphaelframos.refii.profile;
 
+import com.raphaelframos.refii.common.entity.ProfileEntity;
 import com.raphaelframos.refii.common.model.ChatResponse;
+import com.raphaelframos.refii.profile.repository.ProfileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ProfileService {
 
-    public Profile findBy(Long id) {
-        return new Profile();
+    @Autowired
+    private final ProfileRepository repository;
+
+    public ProfileService(ProfileRepository repository) {
+        this.repository = repository;
+    }
+
+    public Optional<ProfileEntity> findBy(Long id) {
+        return repository.findById(id);
     }
 
     public ChatResponse create(Long id, String value, int position) {
@@ -25,5 +37,21 @@ public class ProfileService {
         }
         chatResponse.setPosition(position);
         return chatResponse;
+    }
+
+    public Long init(String email) {
+        Optional<ProfileEntity> entity = repository.findByEmail(email);
+        Long id;
+        if(entity.isPresent()){
+            id = entity.get().getId();
+        } else {
+            id = create(email);
+        }
+        return id;
+    }
+
+    private Long create(String email) {
+        ProfileEntity profileEntity = new ProfileEntity(email);
+        return repository.save(profileEntity).getId();
     }
 }
