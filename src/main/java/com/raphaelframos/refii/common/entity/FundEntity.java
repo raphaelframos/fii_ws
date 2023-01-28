@@ -3,7 +3,7 @@ package com.raphaelframos.refii.common.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "funds")
+@Table(name = "FUND_SCRAP")
 public class FundEntity {
 
     @Id
@@ -13,8 +13,17 @@ public class FundEntity {
     private String admin;
     private String symbol;
     private String href;
+    private String segment;
 
     public FundEntity() {
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+
+    public void setSegment(String segment) {
+        this.segment = segment;
     }
 
     public Long getId() {

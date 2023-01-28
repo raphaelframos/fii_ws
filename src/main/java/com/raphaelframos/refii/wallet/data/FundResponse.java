@@ -12,7 +12,12 @@ public class FundResponse implements Serializable {
     private Option option2;
     private Option option3;
 
-    public FundResponse() {
+    public FundResponse(String symbol, String name, FundFeed fundFeed) {
+        setSymbol(symbol);
+        setSegmented(name);
+        setOption1(new Option(fundFeed.getTotalAmount(), "Quantidade"));
+        setOption2(new Option(fundFeed.getPrice(), "Valor"));
+        setOption3(new Option(fundFeed.getWalletDemo(), "Carteira"));
     }
 
     public String getSymbol() {

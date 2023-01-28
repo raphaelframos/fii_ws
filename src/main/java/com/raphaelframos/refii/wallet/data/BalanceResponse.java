@@ -15,6 +15,11 @@ public class BalanceResponse implements Serializable {
     public BalanceResponse() {
     }
 
+    public BalanceResponse(String title, double total) {
+        setTitle(title);
+        setValue(String.valueOf(total));
+    }
+
     public String getTitle() {
         return title;
     }

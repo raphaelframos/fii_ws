@@ -8,6 +8,7 @@ public class FundDTO {
     private String admin;
     private String symbol;
     private String href;
+    private String segment;
 
     public FundDTO() {}
 
@@ -16,6 +17,14 @@ public class FundDTO {
         this.admin = admin;
         this.symbol = symbol;
         this.href = href;
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+
+    public void setSegment(String segment) {
+        this.segment = segment;
     }
 
     public String getName() {
@@ -60,6 +69,7 @@ public class FundDTO {
         fundEntity.setHref(getHref());
         fundEntity.setName(getName());
         fundEntity.setSymbol(getSymbol());
+        fundEntity.setSegment(getSegment());
         return fundEntity;
     }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 public class FundController {
 
     @Autowired
-    private FundService service;
+    private final FundService service;
 
     public FundController(FundService service) {
         this.service = service;
@@ -31,13 +31,6 @@ public class FundController {
     @RequestMapping("/all")
     public List<FundDTO> all(){
         return service.findAll();
-    }
-
-    @RequestMapping("/create")
-    public ResponseEntity<ChatResponse> create(@RequestParam("id") Long id,
-                                               @RequestParam("message") String value, @RequestParam("position") int position) {
-        ChatResponse chatResponse = service.create(id, value, position);
-        return ResponseEntity.ok(chatResponse);
     }
 
     @RequestMapping("/names")
