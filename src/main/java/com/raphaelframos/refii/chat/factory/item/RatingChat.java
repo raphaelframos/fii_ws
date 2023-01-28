@@ -43,7 +43,7 @@ public class RatingChat implements Chat {
         if(isValid(value)){
             chatResponse = new ChatResponse(nextPosition(), text(), type());
         }else{
-            chatResponse = new ChatResponse(position(), RATING_CHAT, RATING_TYPE_CHAT);
+            chatResponse = new ChatResponse(position(), PRICE_CHAT, PRICE_TYPE_CHAT);
         }
         return chatResponse;
     }

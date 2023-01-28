@@ -1,6 +1,5 @@
 package com.raphaelframos.refii.wallet;
 
-import com.raphaelframos.refii.common.entity.FundWalletEntity;
 import com.raphaelframos.refii.wallet.data.BalanceResponse;
 import com.raphaelframos.refii.wallet.data.FundFeed;
 import com.raphaelframos.refii.wallet.data.FundResponse;
@@ -22,18 +21,28 @@ public class WalletService {
     }
 
     public ArrayList<FundResponse> findBy(Long userId) {
-        List<Object[]> funds = repository.findWalletBy(userId);
-        double totalPrice = repository.totalPrice(userId);
         ArrayList<FundResponse> response = new ArrayList<>();
-        funds.forEach( f -> {
-            FundFeed fundFeed = new FundFeed(f, totalPrice);
-            response.add(new FundResponse(fundFeed.getSymbol(), fundFeed.getSymbol(), fundFeed));
-        });
+        try{
+            List<Object[]> funds = repository.findWalletBy(userId);
+            double totalPrice = repository.totalPrice(userId);
+            funds.forEach( f -> {
+                FundFeed fundFeed = new FundFeed(f, totalPrice);
+                response.add(new FundResponse(fundFeed.getSymbol(), fundFeed.getSegment(), fundFeed));
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return response;
     }
 
     public BalanceResponse balance(Long userId) {
-        double total = repository.totalPrice(userId);
+        double total;
+        try{
+            total = repository.totalPrice(userId);
+        }catch (Exception e){
+            total = 0;
+        }
+
         return new BalanceResponse("Total", total);
     }
 }

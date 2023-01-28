@@ -43,7 +43,7 @@ public class PriceChat implements Chat {
         if(isValid(value)){
             chatResponse = new ChatResponse(nextPosition(), text(), type());
         }else{
-            chatResponse = new ChatResponse(position(), PRICE_CHAT, PRICE_TYPE_CHAT);
+            chatResponse = new ChatResponse(position(), AMOUNT_CHAT, AMOUNT_TYPE_CHAT);
         }
         return chatResponse;
     }

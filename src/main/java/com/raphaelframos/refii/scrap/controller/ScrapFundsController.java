@@ -48,6 +48,10 @@ public class ScrapFundsController {
     @RequestMapping("/create")
     public void create(){
         fundsExplorerService.create();
+    }
 
+    @RequestMapping("/update")
+    public void update(){
+        fundsExplorerService.update();
     }
 }

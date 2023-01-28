@@ -8,6 +8,7 @@ public class FundFeed implements Serializable {
     private String totalAmount;
     private String price;
     private double wallet;
+    private String segment;
 
     public FundFeed() {
     }
@@ -16,7 +17,16 @@ public class FundFeed implements Serializable {
         setSymbol(o[0].toString());
         setTotalAmount(o[1].toString());
         setPrice(o[2].toString());
+        setSegment(o[3].toString());
         setWallet(stringToDouble(getPrice())/ totalPrice);
+    }
+
+    public String getSegment() {
+        return segment;
+    }
+
+    public void setSegment(String segment) {
+        this.segment = segment;
     }
 
     public String getSymbol() {

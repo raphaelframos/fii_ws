@@ -35,7 +35,7 @@ public class EndChat implements Chat {
     public ChatResponse getChatResponse(String value) {
         ChatResponse chatResponse;
         if(isValid(value)){
-            chatResponse = new ChatResponse(0, NAME_CHAT, NAME_TYPE_CHAT);
+            chatResponse = new ChatResponse(1, NAME_CHAT, NAME_TYPE_CHAT);
         }else{
             chatResponse = new ChatResponse(nextPosition(), text(), type());
         }

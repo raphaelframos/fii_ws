@@ -3,8 +3,7 @@ package com.raphaelframos.refii.chat.factory.item;
 import com.raphaelframos.refii.chat.factory.Chat;
 import com.raphaelframos.refii.common.model.ChatResponse;
 
-import static com.raphaelframos.refii.chat.ConstantsUtils.RELOAD_CHAT;
-import static com.raphaelframos.refii.chat.ConstantsUtils.RELOAD_TYPE_CHAT;
+import static com.raphaelframos.refii.chat.ConstantsUtils.*;
 
 public class ReloadChat implements Chat {
     @Override
@@ -47,7 +46,7 @@ public class ReloadChat implements Chat {
         if(isValid(value)){
             chatResponse = new ChatResponse(nextPosition(), text(), type());
         }else{
-            chatResponse = new ChatResponse(position(), RELOAD_CHAT, RELOAD_TYPE_CHAT);
+            chatResponse = new ChatResponse(position(), RATING_CHAT, RATING_TYPE_CHAT);
         }
         return chatResponse;
     }

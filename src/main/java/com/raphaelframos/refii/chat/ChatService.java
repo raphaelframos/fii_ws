@@ -44,22 +44,20 @@ public class ChatService {
     public ChatResponse newFund(String value, int position, Long userId){
         value = value.toUpperCase(Locale.ROOT);
         Chat chat = ChatFactory.get(position);
-        if(chat.isValid(value)){
-            boolean isValid = true;
-            if(position == ChatFactory.AMOUNT){
-                List<String> fundsNames = fundRepository.findNames();
-                isValid = fundsNames.contains(value);
-            }
-            if(isValid){
-                Optional<ProfileEntity> profileEntity = profileService.findBy(userId);
-                if(profileEntity.isPresent()){
-                    saveChat(value, position, userId, profileEntity.get());
-                }else{
-                    value = "";
-                }
+        boolean isValid = true;
+        if(position == ChatFactory.AMOUNT){
+            List<String> fundsNames = fundRepository.findNames();
+            isValid = fundsNames.contains(value);
+        }
+        if(chat.isValid(value) && isValid){
+            Optional<ProfileEntity> profileEntity = profileService.findBy(userId);
+            if(profileEntity.isPresent()){
+                saveChat(value, position, userId, profileEntity.get());
             }else{
                 value = "";
             }
+        }else{
+            value = "";
         }
         return chat.getChatResponse(value);
     }

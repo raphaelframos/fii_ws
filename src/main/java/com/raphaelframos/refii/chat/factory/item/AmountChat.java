@@ -38,7 +38,7 @@ public class AmountChat implements Chat {
         if(isValid(value)){
             chatResponse = new ChatResponse(nextPosition(), text(), type());
         }else{
-            chatResponse = new ChatResponse(position(), AMOUNT_CHAT, AMOUNT_TYPE_CHAT);
+            chatResponse = new ChatResponse(position(), NAME_CHAT, NAME_TYPE_CHAT);
         }
         return chatResponse;
     }

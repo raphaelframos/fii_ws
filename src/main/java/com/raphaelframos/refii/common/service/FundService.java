@@ -1,10 +1,5 @@
 package com.raphaelframos.refii.common.service;
 
-import com.raphaelframos.refii.common.entity.FundWalletEntity;
-import com.raphaelframos.refii.common.entity.NewFundEntity;
-import com.raphaelframos.refii.common.entity.ProfileEntity;
-import com.raphaelframos.refii.common.model.ChatResponse;
-import com.raphaelframos.refii.common.utils.MoneyUtils;
 import com.raphaelframos.refii.fund.repository.FundRepository;
 import com.raphaelframos.refii.profile.ProfileService;
 import com.raphaelframos.refii.profile.repository.ProfileRepository;
@@ -15,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,9 +36,10 @@ public class FundService {
         this.profileService = profileService;
     }
 
-    public void create(ArrayList<FundDTO> funds) {
+    public void create(ArrayList<FundDTO> funds, HashMap<String, String> sectors) {
         for(FundDTO fund : funds){
             if(fund.isValid() && notSaved(fund.getSymbol())){
+                fund.setSegment(sectors.get(fund.getSymbol()));
                 repository.save(fund.toEntity());
             }
         }
