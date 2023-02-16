@@ -86,6 +86,11 @@ public class FundService {
             fundDetail.setAdmin(fund.getAdmin());
             fundDetail.setSymbol(fund.getSymbol());
             fundDetail.setSegment(fund.getSegment());
+            ArrayList<String> links = new ArrayList<>();
+            links.add("https://www.fundsexplorer.com.br/funds/" + fund.getSymbol());
+            links.add("https://statusinvest.com.br/fundos-imobiliarios/" + fund.getSymbol());
+            links.add("https://fiis.com.br/" + fund.getSymbol());
+            fundDetail.setLinks(links);
         }
         return fundDetail;
     }

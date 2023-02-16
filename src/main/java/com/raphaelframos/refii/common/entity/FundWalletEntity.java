@@ -1,5 +1,7 @@
 package com.raphaelframos.refii.common.entity;
 
+import com.raphaelframos.refii.common.FundType;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,6 +22,7 @@ public class FundWalletEntity {
     private ProfileEntity profile;
     @Column(columnDefinition = "DATE")
     private LocalDate date;
+    private FundType type;
 
     public FundWalletEntity() {
         date = LocalDate.now();

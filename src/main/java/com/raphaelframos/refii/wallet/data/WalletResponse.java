@@ -4,7 +4,6 @@ import com.raphaelframos.refii.common.entity.FundWalletEntity;
 import com.raphaelframos.refii.common.utils.MoneyUtils;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 public class WalletResponse implements Serializable {
 
