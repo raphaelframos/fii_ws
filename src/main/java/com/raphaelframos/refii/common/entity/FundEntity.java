@@ -1,9 +1,13 @@
 package com.raphaelframos.refii.common.entity;
 
+import com.raphaelframos.refii.comment.Comment;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "FUND_SCRAP")
+@Table(name = "FUND")
 public class FundEntity {
 
     @Id
@@ -14,8 +18,18 @@ public class FundEntity {
     private String symbol;
     private String href;
     private String segment;
+    @OneToMany
+    private List<Comment> comments;
 
     public FundEntity() {
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getSegment() {
@@ -64,5 +78,12 @@ public class FundEntity {
 
     public void setHref(String href) {
         this.href = href;
+    }
+
+    public void add(Comment comment) {
+        if(comments == null){
+            comments = new ArrayList<>();
+        }
+        this.comments.add(comment);
     }
 }

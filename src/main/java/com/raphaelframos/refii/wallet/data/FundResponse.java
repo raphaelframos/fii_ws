@@ -6,18 +6,28 @@ import java.io.Serializable;
 
 public class FundResponse implements Serializable {
 
+    private Long fundScrapId;
     private String symbol;
     private String segmented;
     private Option option1;
     private Option option2;
     private Option option3;
 
-    public FundResponse(String symbol, String name, FundFeed fundFeed) {
-        setSymbol(symbol);
-        setSegmented(name);
+    public FundResponse(FundFeed fundFeed) {
+        setSymbol(fundFeed.getSymbol());
+        setSegmented(fundFeed.getSegment());
+        setFundScrapId(fundFeed.getFundScrapId());
         setOption1(new Option(fundFeed.getTotalAmount(), "Quantidade"));
         setOption2(new Option(fundFeed.getPrice(), "Valor"));
         setOption3(new Option(fundFeed.getWalletDemo(), "Carteira"));
+    }
+
+    public Long getFundScrapId() {
+        return fundScrapId;
+    }
+
+    public void setFundScrapId(Long fundScrapId) {
+        this.fundScrapId = fundScrapId;
     }
 
     public String getSymbol() {

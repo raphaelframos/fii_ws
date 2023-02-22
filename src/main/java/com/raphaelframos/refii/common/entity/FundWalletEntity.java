@@ -1,10 +1,13 @@
 package com.raphaelframos.refii.common.entity;
 
+import com.raphaelframos.refii.common.FundType;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "FUND_WALLET")
+@Table(name = "WALLET")
 public class FundWalletEntity {
 
     @Id
@@ -17,8 +20,13 @@ public class FundWalletEntity {
     private BigDecimal price;
     @ManyToOne
     private ProfileEntity profile;
+    @Column(columnDefinition = "DATE")
+    private LocalDate date;
+    private FundType type;
 
-    public FundWalletEntity() {}
+    public FundWalletEntity() {
+        date = LocalDate.now();
+    }
 
     public Long getId() {
         return id;
@@ -66,5 +74,23 @@ public class FundWalletEntity {
 
     public void setFund(FundEntity fund) {
         this.fund = fund;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public String getDateDemonstration() {
+        String result;
+        try{
+            result = date.toString();
+        }catch (Exception e){
+            result = "";
+        }
+        return result;
     }
 }

@@ -22,4 +22,14 @@ public class MoneyUtils {
         }
         return result;
     }
+
+    public static BigDecimal intToBigDecimal(int amount) {
+        BigDecimal result = BigDecimal.ZERO;
+        try{
+            result = new BigDecimal(amount);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

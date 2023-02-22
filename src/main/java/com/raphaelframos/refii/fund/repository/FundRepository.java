@@ -11,7 +11,7 @@ public interface FundRepository extends JpaRepository<FundEntity, Long> {
 
     boolean existsFundsBySymbol(String symbol);
 
-    @Query(value = "SELECT (symbol) FROM FUND_SCRAP", nativeQuery = true)
+    @Query(value = "SELECT (symbol) FROM FUND", nativeQuery = true)
     List<String> findNames();
 
     FundEntity findBySymbol(String value);
