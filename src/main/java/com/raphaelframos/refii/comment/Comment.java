@@ -21,7 +21,9 @@ public class Comment {
     @Column(columnDefinition = "DATE")
     private LocalDate date;
 
-    public Comment() {}
+    public Comment() {
+        setDate(LocalDate.now());
+    }
 
     public LocalDate getDate() {
         return date;

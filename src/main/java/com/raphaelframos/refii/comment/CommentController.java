@@ -1,8 +1,10 @@
 package com.raphaelframos.refii.comment;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.websocket.server.PathParam;
@@ -17,6 +19,18 @@ public class CommentController {
 
     public CommentController(CommentService service) {
         this.service = service;
+    }
+
+    @RequestMapping("new/{fundId}")
+    public ResponseEntity<String> newComment(@PathVariable("fundId") Long fundId, @PathParam("userId") Long userId){
+        return ResponseEntity.ok(service.newComment(fundId, userId));
+    }
+
+    @PostMapping
+    @RequestMapping("create/{fundId}")
+    public int create(@PathVariable("fundId") Long fundId,
+                      @PathParam("message") String message, @PathParam("userId") Long userId){
+        return service.create(message, userId, fundId);
     }
 
     @RequestMapping("my/{userId}")
