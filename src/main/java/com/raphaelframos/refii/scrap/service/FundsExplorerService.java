@@ -12,4 +12,5 @@ public interface FundsExplorerService {
     ArrayList<FundRankingDTO> ranking();
     ArrayList<FundRankingDTO> ranking(String type, String category);
     void create();
+    void update();
 }

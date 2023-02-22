@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class ScrapFundsController {
 
     @Autowired
-    private FundsExplorerService fundsExplorerService;
+    private final FundsExplorerService fundsExplorerService;
 
     public ScrapFundsController(FundsExplorerService fundsExplorerService) {
         this.fundsExplorerService = fundsExplorerService;
@@ -48,6 +48,10 @@ public class ScrapFundsController {
     @RequestMapping("/create")
     public void create(){
         fundsExplorerService.create();
+    }
 
+    @RequestMapping("/update")
+    public void update(){
+        fundsExplorerService.update();
     }
 }
