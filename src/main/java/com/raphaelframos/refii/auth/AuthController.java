@@ -1,6 +1,6 @@
 package com.raphaelframos.refii.auth;
 
-import com.raphaelframos.refii.common.entity.ProfileEntity;
+import com.raphaelframos.refii.common.entity.Profile;
 import com.raphaelframos.refii.profile.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +25,7 @@ public class AuthController {
     }
 
     @RequestMapping("find/{id}")
-    public ResponseEntity<ProfileEntity> findBy(@PathVariable("id") Long userId){
+    public ResponseEntity<Profile> findBy(@PathVariable("id") Long userId){
         return ResponseEntity.ok(profileService.findBy(userId).get());
     }
 }

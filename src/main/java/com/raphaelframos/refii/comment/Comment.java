@@ -1,10 +1,10 @@
 package com.raphaelframos.refii.comment;
 
-import com.raphaelframos.refii.common.entity.FundEntity;
-import com.raphaelframos.refii.common.entity.ProfileEntity;
+import com.raphaelframos.refii.common.entity.Fund;
+import com.raphaelframos.refii.common.entity.Profile;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "COMMENT")
@@ -14,22 +14,22 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
-    private ProfileEntity profile;
+    private Profile profile;
     @ManyToOne
-    private FundEntity fund;
+    private Fund fund;
     private String message;
     @Column(columnDefinition = "DATE")
-    private LocalDate date;
+    private LocalDateTime date;
 
     public Comment() {
-        setDate(LocalDate.now());
+        setDate(LocalDateTime.now());
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -41,19 +41,19 @@ public class Comment {
         this.id = id;
     }
 
-    public ProfileEntity getProfile() {
+    public Profile getProfile() {
         return profile;
     }
 
-    public void setProfile(ProfileEntity profile) {
+    public void setProfile(Profile profile) {
         this.profile = profile;
     }
 
-    public FundEntity getFund() {
+    public Fund getFund() {
         return fund;
     }
 
-    public void setFund(FundEntity fund) {
+    public void setFund(Fund fund) {
         this.fund = fund;
     }
 

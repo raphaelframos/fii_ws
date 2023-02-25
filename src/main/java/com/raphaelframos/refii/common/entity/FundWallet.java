@@ -1,30 +1,28 @@
 package com.raphaelframos.refii.common.entity;
 
-import com.raphaelframos.refii.common.FundType;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "WALLET")
-public class FundWalletEntity {
+@Table(name = "wallet")
+public class FundWallet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
-    private FundEntity fund;
+    private Fund fund;
     private int amount;
     private int rating;
     private BigDecimal price;
     @ManyToOne
-    private ProfileEntity profile;
+    private Profile profile;
     @Column(columnDefinition = "DATE")
     private LocalDate date;
-    private FundType type;
+    private int type;
 
-    public FundWalletEntity() {
+    public FundWallet() {
         date = LocalDate.now();
     }
 
@@ -52,11 +50,11 @@ public class FundWalletEntity {
         this.price = price;
     }
 
-    public ProfileEntity getProfile() {
+    public Profile getProfile() {
         return profile;
     }
 
-    public void setProfile(ProfileEntity profile) {
+    public void setProfile(Profile profile) {
         this.profile = profile;
     }
 
@@ -68,11 +66,11 @@ public class FundWalletEntity {
         this.rating = rating;
     }
 
-    public FundEntity getFund() {
+    public Fund getFund() {
         return fund;
     }
 
-    public void setFund(FundEntity fund) {
+    public void setFund(Fund fund) {
         this.fund = fund;
     }
 
@@ -82,6 +80,14 @@ public class FundWalletEntity {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getDateDemonstration() {

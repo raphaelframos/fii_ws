@@ -1,6 +1,6 @@
 package com.raphaelframos.refii.profile;
 
-import com.raphaelframos.refii.common.entity.ProfileEntity;
+import com.raphaelframos.refii.common.entity.Profile;
 import com.raphaelframos.refii.common.model.ChatResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class ProfileController {
     }
 
     @RequestMapping("{id}")
-    public ResponseEntity<ProfileEntity> findBy(@PathVariable("id") Long userId){
+    public ResponseEntity<Profile> findBy(@PathVariable("id") Long userId){
         return ResponseEntity.ok(service.findBy(userId).get());
     }
 }

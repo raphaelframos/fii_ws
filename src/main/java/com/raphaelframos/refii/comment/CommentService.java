@@ -1,7 +1,8 @@
 package com.raphaelframos.refii.comment;
 
-import com.raphaelframos.refii.common.entity.FundEntity;
-import com.raphaelframos.refii.common.entity.ProfileEntity;
+import com.raphaelframos.refii.common.entity.Fund;
+import com.raphaelframos.refii.common.entity.Profile;
+import com.raphaelframos.refii.common.model.ChatResponse;
 import com.raphaelframos.refii.fund.repository.FundRepository;
 import com.raphaelframos.refii.profile.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
@@ -27,8 +29,9 @@ public class CommentService {
         this.fundRepository = fundRepository;
     }
 
-    public List<Comment> commentsBy(Long userId, Long fundId) {
-        return repository.findMyComments(userId, fundId);
+    public List<CommentResponse> commentsBy(Long userId, Long fundId) {
+        List<Comment> comments = repository.findMyComments(userId, fundId);
+        return comments.stream().map(m-> new CommentResponse(m, true)).collect(Collectors.toList());
     }
 
     public List<Comment> find(Long fundId) {
@@ -37,10 +40,10 @@ public class CommentService {
 
     @SuppressWarnings("OptionalGetWithoutIsPresent")
     public int create(String message, Long userId, Long fundId) {
-        Optional<ProfileEntity> profileEntity = profileRepository.findById(userId);
-        Optional<FundEntity> fundEntity = fundRepository.findById(fundId);
+        Optional<Profile> profileEntity = profileRepository.findById(userId);
+        Optional<Fund> fundEntity = fundRepository.findById(fundId);
         try {
-            FundEntity fund = fundEntity.get();
+            Fund fund = fundEntity.get();
             Comment comment = new Comment();
             comment.setMessage(message);
             comment.setProfile(profileEntity.get());
@@ -54,15 +57,20 @@ public class CommentService {
         }
     }
 
-    public String newComment(Long fundId, Long userId) {
-        Optional<FundEntity> fundEntity = fundRepository.findById(fundId);
+    public ChatResponse newComment(Long fundId, Long userId) {
+        Optional<Fund> fundEntity = fundRepository.findById(fundId);
         Optional<Comment> comment = repository.lastComment(userId, fundId);
+        System.out.println("Teste " + comment.isPresent());
         String result = "";
         if (fundEntity.isPresent()) {
-            FundEntity fund = fundEntity.get();
+            Fund fund = fundEntity.get();
             result = comment.map(value -> "Seu último comentário sobre o " + fund.getSymbol() + " foi: " + value.getMessage() +
                     "\no que deseja acrescentar?").orElseGet(() -> "O que você pensa sobre o " + fund.getSymbol() + "?");
         }
-        return result;
+        return new ChatResponse(0, result, 0);
+    }
+
+    public List<Comment> findAll() {
+        return repository.findAll();
     }
 }

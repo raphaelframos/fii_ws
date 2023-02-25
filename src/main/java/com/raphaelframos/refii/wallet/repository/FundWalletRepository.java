@@ -1,12 +1,12 @@
 package com.raphaelframos.refii.wallet.repository;
 
-import com.raphaelframos.refii.common.entity.FundWalletEntity;
+import com.raphaelframos.refii.common.entity.FundWallet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface FundWalletRepository extends JpaRepository<FundWalletEntity, Long> {
+public interface FundWalletRepository extends JpaRepository<FundWallet, Long> {
 
     @Query(value = "SELECT " +
             "r.symbol AS symbol, SUM(f.amount) AS totalAmount, SUM(f.price) AS totalPrice, r.segment AS segment, r.id AS fundScrapId" +
@@ -17,5 +17,5 @@ public interface FundWalletRepository extends JpaRepository<FundWalletEntity, Lo
     double totalPrice(Long userId);
 
     @Query(value = "SELECT * FROM WALLET f WHERE f.fund_id = ?1 AND f.profile_id = ?2", nativeQuery = true)
-    List<FundWalletEntity> findByIdAndUser(Long fundId, Long userId);
+    List<FundWallet> findByIdAndUser(Long fundId, Long userId);
 }
