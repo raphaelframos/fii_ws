@@ -1,6 +1,6 @@
 package com.raphaelframos.refii.wallet;
 
-import com.raphaelframos.refii.common.entity.FundWalletEntity;
+import com.raphaelframos.refii.common.entity.FundWallet;
 import com.raphaelframos.refii.wallet.data.BalanceResponse;
 import com.raphaelframos.refii.wallet.data.FundFeed;
 import com.raphaelframos.refii.wallet.data.FundResponse;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +27,7 @@ public class WalletService {
         ArrayList<FundResponse> response = new ArrayList<>();
         try{
             List<Object[]> funds = repository.findWalletBy(userId);
-            double totalPrice = repository.totalPrice(userId);
+            double totalPrice = getTotalPrice(userId);
             funds.forEach( f -> {
                 FundFeed fundFeed = new FundFeed(f, totalPrice);
                 response.add(new FundResponse(fundFeed));
@@ -37,6 +36,17 @@ public class WalletService {
             e.printStackTrace();
         }
         return response;
+    }
+
+    private double getTotalPrice(Long userId) {
+        double totalPrice;
+        try {
+            totalPrice = repository.totalPrice(userId);
+        }catch (Exception e){
+            totalPrice = 0.0;
+        }
+
+        return totalPrice;
     }
 
     public BalanceResponse balance(Long userId) {
@@ -51,7 +61,7 @@ public class WalletService {
     }
 
     public List<WalletResponse> historic(Long fundId, Long userId) {
-        List<FundWalletEntity> funds = repository.findByIdAndUser(fundId, userId);
+        List<FundWallet> funds = repository.findByIdAndUser(fundId, userId);
         return funds.stream().map(WalletResponse::new).collect(Collectors.toList());
     }
 }

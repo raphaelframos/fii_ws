@@ -11,16 +11,24 @@ public class FundFeed implements Serializable {
     private String segment;
     private Long fundScrapId;
 
-    public FundFeed() {
-    }
+    public FundFeed() {}
 
     public FundFeed(Object[] o, double totalPrice) {
-        setSymbol(o[0].toString());
-        setTotalAmount(o[1].toString());
-        setPrice(o[2].toString());
-        setSegment(o[3].toString());
-        setFundScrapId(Long.parseLong(o[4].toString()));
+        setSymbol(convert(o[0]));
+        setTotalAmount(convert(o[1]));
+        setPrice(convert(o[2]));
+        setSegment(convert(o[3]));
+        setFundScrapId(Long.parseLong(convert(o[4])));
         setWallet(stringToDouble(getPrice())/ totalPrice);
+    }
+
+    private String convert(Object o){
+        try {
+            return o.toString();
+        } catch (Exception e){
+            return "";
+        }
+
     }
 
     public Long getFundScrapId() {

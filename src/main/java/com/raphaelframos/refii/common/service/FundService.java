@@ -1,6 +1,6 @@
 package com.raphaelframos.refii.common.service;
 
-import com.raphaelframos.refii.common.entity.FundEntity;
+import com.raphaelframos.refii.common.entity.Fund;
 import com.raphaelframos.refii.fund.model.FundDetail;
 import com.raphaelframos.refii.fund.repository.FundRepository;
 import com.raphaelframos.refii.profile.ProfileService;
@@ -38,10 +38,18 @@ public class FundService {
     public void create(ArrayList<FundDTO> funds, HashMap<String, String> sectors) {
         for(FundDTO fund : funds){
             if(fund.isValid() && notSaved(fund.getSymbol())){
-                fund.setSegment(sectors.get(fund.getSymbol()));
+                fund.setSegment(getSegment(sectors, fund));
                 repository.save(fund.toEntity());
             }
         }
+    }
+
+    private String getSegment(HashMap<String, String> sectors, FundDTO fund) {
+        String result = sectors.get(fund.getSymbol());
+        if(result == null){
+            result = "Outros";
+        }
+        return result;
     }
 
     private boolean notSaved(String symbol) {
@@ -49,10 +57,9 @@ public class FundService {
     }
 
     public List<FundDTO> findAll() {
-        List<FundDTO> funds = repository.findAll().stream()
+        return repository.findAll().stream()
                 .map(f -> new FundDTO(f.getName(), f.getAdmin(), f.getSymbol(), f.getHref()))
                 .collect(Collectors.toList());
-        return funds;
     }
 
     private boolean isValidAmount(String value) {
@@ -73,10 +80,10 @@ public class FundService {
     }
 
     public FundDetail detail(Long fundId) {
-        Optional<FundEntity> fundEntity = repository.findById(fundId);
+        Optional<Fund> fundEntity = repository.findById(fundId);
         FundDetail fundDetail = new FundDetail();
         if(fundEntity.isPresent()){
-            FundEntity fund = fundEntity.get();
+            Fund fund = fundEntity.get();
             fundDetail.setName(fund.getName());
             fundDetail.setAdmin(fund.getAdmin());
             fundDetail.setSymbol(fund.getSymbol());

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "FUND")
-public class FundEntity {
+@Table(name = "fund")
+public class Fund {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,7 +21,7 @@ public class FundEntity {
     @OneToMany
     private List<Comment> comments;
 
-    public FundEntity() {
+    public Fund() {
     }
 
     public List<Comment> getComments() {

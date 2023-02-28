@@ -4,8 +4,9 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "PROFILE")
-public class ProfileEntity {
+@Entity
+@Table(name = "profile")
+public class Profile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,20 +15,22 @@ public class ProfileEntity {
     private String email;
     private String phone;
     private String occupation;
+    private String photo;
+    private int points;
     @OneToMany
-    private List<FundWalletEntity> funds;
+    private List<FundWallet> funds;
 
-    public ProfileEntity(){}
+    public Profile(){}
 
-    public ProfileEntity(String email) {
+    public Profile(String email) {
         setEmail(email);
     }
 
-    public void add(FundWalletEntity fundWalletEntity) {
+    public void add(FundWallet fundWallet) {
         if(funds == null){
             funds = new ArrayList<>();
         }
-        funds.add(fundWalletEntity);
+        funds.add(fundWallet);
     }
 
     public Long getId() {
@@ -54,11 +57,11 @@ public class ProfileEntity {
         this.phone = phone;
     }
 
-    public List<FundWalletEntity> getFunds() {
+    public List<FundWallet> getFunds() {
         return funds;
     }
 
-    public void setFunds(List<FundWalletEntity> funds) {
+    public void setFunds(List<FundWallet> funds) {
         this.funds = funds;
     }
 
@@ -76,5 +79,21 @@ public class ProfileEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }

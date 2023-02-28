@@ -18,7 +18,7 @@ public class EndChat implements Chat {
 
     @Override
     public int nextPosition() {
-        return 0;
+        return 10;
     }
 
     @Override

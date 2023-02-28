@@ -1,14 +1,14 @@
 package com.raphaelframos.refii.scrap.data;
 
-import com.raphaelframos.refii.common.entity.FundEntity;
+import com.raphaelframos.refii.common.entity.Fund;
 
 public class FundDTO {
 
-    private String name;
-    private String admin;
-    private String symbol;
-    private String href;
-    private String segment;
+    private String name = "";
+    private String admin = "";
+    private String symbol = "";
+    private String href = "";
+    private String segment = "";
 
     public FundDTO() {}
 
@@ -63,13 +63,13 @@ public class FundDTO {
         return !name.isEmpty() && !symbol.isEmpty() && !href.isEmpty();
     }
 
-    public FundEntity toEntity() {
-        FundEntity fundEntity = new FundEntity();
-        fundEntity.setAdmin(getAdmin());
-        fundEntity.setHref(getHref());
-        fundEntity.setName(getName());
-        fundEntity.setSymbol(getSymbol());
-        fundEntity.setSegment(getSegment());
-        return fundEntity;
+    public Fund toEntity() {
+        Fund fund = new Fund();
+        fund.setAdmin(getAdmin());
+        fund.setHref(getHref());
+        fund.setName(getName());
+        fund.setSymbol(getSymbol());
+        fund.setSegment(getSegment());
+        return fund;
     }
 }

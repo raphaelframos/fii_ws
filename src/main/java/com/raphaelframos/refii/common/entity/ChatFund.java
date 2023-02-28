@@ -2,8 +2,9 @@ package com.raphaelframos.refii.common.entity;
 
 import javax.persistence.*;
 
-@Entity(name = "FUND_CHAT")
-public class ChatFundEntity {
+@Entity
+@Table(name = "fund_chat")
+public class ChatFund {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -11,11 +12,11 @@ public class ChatFundEntity {
     private int position;
     private String value;
     @ManyToOne
-    private ProfileEntity profile;
+    private Profile profile;
 
-    public ChatFundEntity() {}
+    public ChatFund() {}
 
-    public ChatFundEntity(ProfileEntity profile, int position, String value) {
+    public ChatFund(Profile profile, int position, String value) {
         setPosition(position);
         setProfile(profile);
         setValue(value);
@@ -45,11 +46,11 @@ public class ChatFundEntity {
         this.value = value;
     }
 
-    public ProfileEntity getProfile() {
+    public Profile getProfile() {
         return profile;
     }
 
-    public void setProfile(ProfileEntity profile) {
+    public void setProfile(Profile profile) {
         this.profile = profile;
     }
 }

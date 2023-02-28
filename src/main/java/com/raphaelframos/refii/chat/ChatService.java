@@ -2,9 +2,9 @@ package com.raphaelframos.refii.chat;
 
 import com.raphaelframos.refii.chat.factory.Chat;
 import com.raphaelframos.refii.chat.factory.ChatFactory;
-import com.raphaelframos.refii.common.entity.ChatFundEntity;
-import com.raphaelframos.refii.common.entity.FundWalletEntity;
-import com.raphaelframos.refii.common.entity.ProfileEntity;
+import com.raphaelframos.refii.common.entity.ChatFund;
+import com.raphaelframos.refii.common.entity.FundWallet;
+import com.raphaelframos.refii.common.entity.Profile;
 import com.raphaelframos.refii.common.model.ChatResponse;
 import com.raphaelframos.refii.fund.repository.FundRepository;
 import com.raphaelframos.refii.profile.ProfileService;
@@ -50,7 +50,7 @@ public class ChatService {
             isValid = fundsNames.contains(value);
         }
         if(chat.isValid(value) && isValid){
-            Optional<ProfileEntity> profileEntity = profileService.findBy(userId);
+            Optional<Profile> profileEntity = profileService.findBy(userId);
             if(profileEntity.isPresent()){
                 saveChat(value, position, userId, profileEntity.get());
             }else{
@@ -62,14 +62,14 @@ public class ChatService {
         return chat.getChatResponse(value);
     }
 
-    private void saveChat(String value, int position, Long userId, ProfileEntity profileEntity) {
-        Optional<ChatFundEntity> chatFundEntity = repository.findByPositionAndUserId(position, userId);
-        ChatFundEntity entity;
+    private void saveChat(String value, int position, Long userId, Profile profileEntity) {
+        Optional<ChatFund> chatFundEntity = repository.findByPositionAndUserId(position, userId);
+        ChatFund entity;
         if(chatFundEntity.isPresent()){
             entity = chatFundEntity.get();
             entity.setValue(value);
         }else{
-            entity = new ChatFundEntity(profileEntity, position, value);
+            entity = new ChatFund(profileEntity, position, value);
         }
         repository.save(entity);
         if(position == ChatFactory.RELOAD){
@@ -77,10 +77,10 @@ public class ChatService {
         }
     }
 
-    private void saveFund(Long userId, ProfileEntity profileEntity) {
-        FundWalletEntity fund = new FundWalletEntity();
+    private void saveFund(Long userId, Profile profileEntity) {
+        FundWallet fund = new FundWallet();
         fund.setProfile(profileEntity);
-        List<ChatFundEntity> answers = repository.findByUserId(userId);
+        List<ChatFund> answers = repository.findByUserId(userId);
         answers.forEach(c-> {
             switch (c.getPosition()){
                 case ChatFactory.AMOUNT:

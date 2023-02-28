@@ -1,6 +1,6 @@
 package com.raphaelframos.refii.wallet.data;
 
-import com.raphaelframos.refii.common.entity.FundWalletEntity;
+import com.raphaelframos.refii.common.entity.FundWallet;
 import com.raphaelframos.refii.common.utils.MoneyUtils;
 
 import java.io.Serializable;
@@ -16,7 +16,7 @@ public class WalletResponse implements Serializable {
 
     public WalletResponse(){}
 
-    public WalletResponse(FundWalletEntity fundWallet) {
+    public WalletResponse(FundWallet fundWallet) {
         setId(fundWallet.getId());
         setAmount(fundWallet.getAmount());
         setDate(fundWallet.getDateDemonstration());

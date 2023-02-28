@@ -1,6 +1,6 @@
 package com.raphaelframos.refii.profile;
 
-import com.raphaelframos.refii.common.entity.ProfileEntity;
+import com.raphaelframos.refii.common.entity.Profile;
 import com.raphaelframos.refii.common.model.ChatResponse;
 import com.raphaelframos.refii.profile.repository.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class ProfileService {
         this.repository = repository;
     }
 
-    public Optional<ProfileEntity> findBy(Long id) {
+    public Optional<Profile> findBy(Long id) {
         return repository.findById(id);
     }
 
@@ -40,7 +40,7 @@ public class ProfileService {
     }
 
     public Long init(String email) {
-        Optional<ProfileEntity> entity = repository.findByEmail(email);
+        Optional<Profile> entity = repository.findByEmail(email);
         Long id;
         if(entity.isPresent()){
             id = entity.get().getId();
@@ -51,7 +51,7 @@ public class ProfileService {
     }
 
     private Long create(String email) {
-        ProfileEntity profileEntity = new ProfileEntity(email);
-        return repository.save(profileEntity).getId();
+        Profile profile = new Profile(email);
+        return repository.save(profile).getId();
     }
 }
