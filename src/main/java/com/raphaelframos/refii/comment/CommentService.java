@@ -60,7 +60,6 @@ public class CommentService {
     public ChatResponse newComment(Long fundId, Long userId) {
         Optional<Fund> fundEntity = fundRepository.findById(fundId);
         Optional<Comment> comment = repository.lastComment(userId, fundId);
-        System.out.println("Teste " + comment.isPresent());
         String result = "";
         if (fundEntity.isPresent()) {
             Fund fund = fundEntity.get();

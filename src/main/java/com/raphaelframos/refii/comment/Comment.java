@@ -17,6 +17,7 @@ public class Comment {
     private Profile profile;
     @ManyToOne
     private Fund fund;
+    @Column(length = 2048)
     private String message;
     @Column(columnDefinition = "DATE")
     private LocalDateTime date;

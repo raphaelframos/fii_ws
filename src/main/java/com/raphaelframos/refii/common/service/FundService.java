@@ -38,10 +38,18 @@ public class FundService {
     public void create(ArrayList<FundDTO> funds, HashMap<String, String> sectors) {
         for(FundDTO fund : funds){
             if(fund.isValid() && notSaved(fund.getSymbol())){
-                fund.setSegment(sectors.get(fund.getSymbol()));
+                fund.setSegment(getSegment(sectors, fund));
                 repository.save(fund.toEntity());
             }
         }
+    }
+
+    private String getSegment(HashMap<String, String> sectors, FundDTO fund) {
+        String result = sectors.get(fund.getSymbol());
+        if(result == null){
+            result = "Outros";
+        }
+        return result;
     }
 
     private boolean notSaved(String symbol) {
