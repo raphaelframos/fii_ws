@@ -61,7 +61,7 @@ public class WalletService {
     }
 
     public List<WalletResponse> historic(Long fundId, Long userId) {
-        List<FundWallet> funds = repository.findByIdAndUser(fundId, userId);
+        List<FundWallet> funds = repository.findByFundIdAndUser(fundId, userId);
         return funds.stream().map(WalletResponse::new).collect(Collectors.toList());
     }
 }

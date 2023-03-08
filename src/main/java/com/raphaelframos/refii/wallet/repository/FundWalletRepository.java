@@ -17,5 +17,5 @@ public interface FundWalletRepository extends JpaRepository<FundWallet, Long> {
     double totalPrice(Long userId);
 
     @Query(value = "SELECT * FROM WALLET f WHERE f.fund_id = ?1 AND f.profile_id = ?2", nativeQuery = true)
-    List<FundWallet> findByIdAndUser(Long fundId, Long userId);
+    List<FundWallet> findByFundIdAndUser(Long fundId, Long userId);
 }

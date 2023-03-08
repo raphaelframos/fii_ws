@@ -22,8 +22,9 @@ public class ChatFundController {
     @RequestMapping("fund/{userId}/{position}")
     public ChatResponse newFund(@PathVariable("userId") Long userId,
             @PathVariable("position") int position,
-            @RequestParam("message") String value
+            @RequestParam("message") String value,
+            @RequestParam("fundId") Long fundId
     ){
-        return service.newFund(value, position, userId);
+        return service.newFund(value, position, userId, fundId);
     }
 }

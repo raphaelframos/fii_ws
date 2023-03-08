@@ -11,7 +11,18 @@ public class ChatFactory {
     public static final int RELOAD = 4;
     public static final int END = 5;
 
-    public static Chat get(int position) {
+    public static final int AMOUNT_SELL = 0;
+    public static final int PRICE_SELL = 1;
+
+    public static Chat sellFundChat(int position) {
+        Chat chat = null;
+        switch (position){
+            case AMOUNT_SELL:
+        }
+        return chat;
+    }
+
+    public static Chat newFundChat(int position) {
         Chat chat;
         switch (position){
             case NAME:
