@@ -4,39 +4,41 @@ import com.raphaelframos.refii.chat.factory.Chat;
 import com.raphaelframos.refii.common.model.ChatResponse;
 
 import static com.raphaelframos.refii.chat.ConstantsUtils.*;
-import static com.raphaelframos.refii.chat.ConstantsUtils.PRICE_TYPE_CHAT;
+import static com.raphaelframos.refii.chat.ConstantsUtils.RATING_TYPE_CHAT;
 
-public class RatingSell implements Chat {
-
+public class EndSell implements Chat {
     @Override
     public String text() {
-        return RATING_CHAT;
+        return "Obrigado, até o próximo!";
     }
 
     @Override
     public int position() {
-        return 2;
-    }
-
-    @Override
-    public int nextPosition() {
         return 3;
     }
 
     @Override
+    public int nextPosition() {
+        return 4;
+    }
+
+    @Override
     public boolean isValid(String value) {
-        double result;
         try{
-            result = Double.parseDouble(value);
+            int rating = Integer.parseInt(value);
+            if(rating >= 1 && rating <= 5){
+                return true;
+            }else{
+                throw new NumberFormatException("Número inválido");
+            }
         }catch (Exception e){
-            result = 0;
+            return false;
         }
-        return result > 0;
     }
 
     @Override
     public int type() {
-        return RATING_TYPE_CHAT;
+        return NAME_TYPE_CHAT;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class RatingSell implements Chat {
         if(isValid(value)){
             chatResponse = new ChatResponse(nextPosition(), text(), type());
         }else{
-            chatResponse = new ChatResponse(position(), PRICE_CHAT, PRICE_TYPE_CHAT);
+            chatResponse = new ChatResponse(position(), RATING_CHAT, RATING_TYPE_CHAT);
         }
         return chatResponse;
     }

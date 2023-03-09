@@ -50,14 +50,7 @@ public class WalletService {
     }
 
     public BalanceResponse balance(Long userId) {
-        double total;
-        try{
-            total = repository.totalPrice(userId);
-        }catch (Exception e){
-            total = 0;
-        }
-
-        return new BalanceResponse("Total", total);
+        return new BalanceResponse("Total", getTotalPrice(userId));
     }
 
     public List<WalletResponse> historic(Long fundId, Long userId) {

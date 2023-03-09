@@ -20,6 +20,7 @@ public class FundFeed implements Serializable {
         setSegment(convert(o[3]));
         setFundScrapId(Long.parseLong(convert(o[4])));
         setWallet(stringToDouble(getPrice())/ totalPrice);
+        System.out.println("Teste " + this);
     }
 
     private String convert(Object o){
@@ -28,7 +29,6 @@ public class FundFeed implements Serializable {
         } catch (Exception e){
             return "";
         }
-
     }
 
     public Long getFundScrapId() {
@@ -90,5 +90,17 @@ public class FundFeed implements Serializable {
         }catch (Exception e){
             return 0.0;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "FundFeed{" +
+                "symbol='" + symbol + '\'' +
+                ", totalAmount='" + totalAmount + '\'' +
+                ", price='" + price + '\'' +
+                ", wallet=" + wallet +
+                ", segment='" + segment + '\'' +
+                ", fundScrapId=" + fundScrapId +
+                '}';
     }
 }

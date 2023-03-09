@@ -3,9 +3,11 @@ package com.raphaelframos.refii.chat;
 import com.raphaelframos.refii.chat.factory.Chat;
 import com.raphaelframos.refii.chat.factory.ChatFactory;
 import com.raphaelframos.refii.chat.factory.sell.AmountSell;
+import com.raphaelframos.refii.chat.factory.sell.EndSell;
 import com.raphaelframos.refii.chat.factory.sell.InitSell;
 import com.raphaelframos.refii.chat.factory.sell.RatingSell;
 import com.raphaelframos.refii.common.entity.ChatFund;
+import com.raphaelframos.refii.common.entity.Fund;
 import com.raphaelframos.refii.common.entity.FundWallet;
 import com.raphaelframos.refii.common.entity.Profile;
 import com.raphaelframos.refii.common.model.ChatResponse;
@@ -59,19 +61,55 @@ public class ChatService {
     private ChatResponse sellFund(String value, int position, Long userId, Long fundId) {
         Optional<Profile> profileEntity = profileService.findBy(userId);
         List<FundWallet> funds = fundWalletRepository.findByFundIdAndUser(fundId, userId);
-        Chat chat = null;
-        if(profileEntity.isPresent()){
-            int amount = sum(funds);
-            if(position == 0){
-                chat = new InitSell(amount, funds.get(0).getFund().getSymbol());
-            }else if (position == 1) {
-                chat = new AmountSell(amount, funds.get(0).getFund().getSymbol());
-            }else{
-                chat = new RatingSell();
+        Fund fund = funds.get(0).getFund();
+        Chat chat;
+        int amount = sum(funds);
+        if(position == 0){
+            chat = new InitSell(amount, fund.getSymbol());
+        }else if (position == 1) {
+            chat = new AmountSell(amount, fund.getSymbol());
+        }else if( position == 2){
+            chat = new RatingSell();
+        }else {
+            chat = new EndSell();
+        }
+        if(chat.isValid(value)){
+            Optional<ChatFund> chatFundEntity = repository.findByPositionAndUserId(position, userId);
+            if(profileEntity.isPresent()){
+                Profile profile = profileEntity.get();
+                ChatFund entity;
+                if(chatFundEntity.isPresent()){
+                    entity = chatFundEntity.get();
+                    entity.setValue(value);
+                }else{
+                    entity = new ChatFund(profile, position, value);
+                }
+                repository.save(entity);
+                if(position == 3){
+                    FundWallet fundWallet = new FundWallet();
+                    fundWallet.setProfile(profile);
+                    fundWallet.setFund(fund);
+                    List<ChatFund> answers = repository.findByUserId(userId);
+                    answers.forEach(c-> {
+                        switch (c.getPosition()){
+                            case ChatFactory.AMOUNT_SELL:
+                                fundWallet.setAmount(Integer.parseInt(c.getValue()) * -1);
+                                break;
+                            case ChatFactory.PRICE_SELL:
+                                fundWallet.setPrice(new BigDecimal(c.getValue()));
+                                break;
+                            case ChatFactory.RATING_SELL:
+                                fundWallet.setRating(Integer.parseInt(c.getValue()));
+                                break;
+                        }
+                    });
+
+                    fundWallet.setType(0);
+                    fundWalletRepository.save(fundWallet);
+                    repository.delete(userId);
+                }
             }
         }
-
-        assert chat != null;
         return chat.getChatResponse(value);
     }
 
@@ -121,6 +159,7 @@ public class ChatService {
     private void saveFund(Long userId, Profile profileEntity) {
         FundWallet fund = new FundWallet();
         fund.setProfile(profileEntity);
+        fund.setType(1);
         List<ChatFund> answers = repository.findByUserId(userId);
         answers.forEach(c-> {
             switch (c.getPosition()){
